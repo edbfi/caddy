@@ -77,8 +77,8 @@ jobs:
         env:
           IMAGE: ${{ inputs.image }}
           ARCH: ${{ matrix.arch }}
-        run: cd tooling
-          bash tools/smoke.sh "local-validation:$IMAGE-$ARCH" ../evidence
+        working-directory: tooling
+        run: bash tools/smoke.sh "local-validation:$IMAGE-$ARCH" ../evidence
       - name: Retain tested image for publication
         if: inputs.export_image
         env:

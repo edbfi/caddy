@@ -3,6 +3,10 @@ set -euo pipefail
 image="$1"
 evidence="$2"
 bash tools/base-smoke.sh "$image" "$evidence"
+docker run --rm --entrypoint /app/caddy "$image" version > "$evidence/version.txt"
+expected="v$(jq -r .version meta.json)"
+test "$(cut -d " " -f 1 "$evidence/version.txt")" = "$expected"
+docker run --rm --entrypoint /app/caddy "$image" build-info > "$evidence/build-info.txt"
 docker run --rm --entrypoint /app/caddy "$image" list-modules > "$evidence/modules.txt"
 for module in dns.providers.cloudflare dns.providers.njalla http.handlers.rate_limit; do
   grep -Fx "$module" "$evidence/modules.txt"
