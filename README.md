@@ -7,3 +7,10 @@ The image uses the edbfi Alpine VPN base with pinned architecture digests. Caddy
 CI builds natively on amd64 and arm64, checks module presence and default startup, validates configuration, serves HTTP and verifies the response and log directory ownership. DNS provider modules are checked for inclusion; no live DNS credentials or certificate issuance are exercised. Publishing is manual after successful CI from the matching release branch and consumes the tested architecture archives. No Docker Hub, Discord or downstream repository write credentials are used.
 
 GPL-3.0 license and upstream attribution retained. Dependency/base updates require reviewed commits and full CI before publishing.
+
+Shared CI and Renovate presets use automation `v3.0.0`. The custom checked merger
+is retired. Renovate automerge is explicitly disabled pending verified required
+CI enforcement and a native Renovate canary. The read-only PR policy check
+preserves sign-offs, Conventional Commit titles, review and hold requirements.
+Native architecture builds and every existing container smoke assertion remain
+mandatory; image publication remains an explicit manual operation after CI.
