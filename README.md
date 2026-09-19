@@ -8,7 +8,7 @@ CI builds natively on amd64 and arm64, checks module presence and default startu
 
 GPL-3.0 license and upstream attribution retained. Dependency/base updates require reviewed commits and full CI before publishing.
 
-Shared CI and Renovate presets use automation `v3.0.0`. The custom checked merger
+Shared CI and Renovate presets use automation `v3.0.1`. The custom checked merger
 is retired. Renovate automerge is explicitly disabled pending verified required
 CI enforcement and a native Renovate canary. The read-only PR policy check
 preserves sign-offs, Conventional Commit titles, review and hold requirements.
