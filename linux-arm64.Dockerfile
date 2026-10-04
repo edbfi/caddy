@@ -3,14 +3,16 @@
 ARG UPSTREAM_IMAGE
 ARG UPSTREAM_TAG_SHA
 
-FROM golang:alpine@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414 AS builder
+FROM golang:alpine AS builder
 ARG VERSION
-RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.4.7 && \
+RUN apk add --no-cache curl jq
+RUN xcaddy_version=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/caddyserver/xcaddy/releases/latest" | jq -r .tag_name | sed s/v//g) && \
+    wget -O - "https://github.com/caddyserver/xcaddy/releases/download/v${xcaddy_version}/xcaddy_${xcaddy_version}_linux_arm64.tar.gz" | tar xzf - -C "/bin" && \
     xcaddy build v${VERSION} --output /caddy-bin \
-        --with github.com/mholt/caddy-ratelimit@5625512f24f6f59d6f64fb3aafe5eecff0b286db \
+        --with github.com/mholt/caddy-ratelimit \
         --with github.com/caddy-dns/njalla@v1.0.0 \
-        --with github.com/caddy-dns/cloudflare@a8737d095ad5a48ca031cea6ab704057dbc2d250 && \
-    chmod 755 /caddy-bin
+        --with github.com/caddy-dns/cloudflare && \
+    chmod 755 "/caddy-bin"
 
 
 FROM ${UPSTREAM_IMAGE}:${UPSTREAM_TAG_SHA}
