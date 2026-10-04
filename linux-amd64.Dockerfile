@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=skip=InvalidDefaultArgInFrom
 ARG UPSTREAM_IMAGE
-ARG UPSTREAM_DIGEST_AMD64
+ARG UPSTREAM_TAG_SHA
 
 FROM golang:alpine@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414 AS builder
 ARG VERSION
@@ -13,7 +13,7 @@ RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.4.7 && \
     chmod 755 /caddy-bin
 
 
-FROM ${UPSTREAM_IMAGE}@${UPSTREAM_DIGEST_AMD64}
+FROM ${UPSTREAM_IMAGE}:${UPSTREAM_TAG_SHA}
 EXPOSE 8080 8443
 ARG IMAGE_STATS
 ENV IMAGE_STATS=${IMAGE_STATS} CUSTOM_BUILD="" WEBUI_PORTS="8080/tcp,8443/tcp"
