@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="root/app/www/caddy.svg" alt="caddy logo" width="256" height="256">
+  <img src="root/app/www/caddy.svg" alt="caddy logo" width="160" height="160">
 </p>
 
 <h1 align="center">caddy</h1>
@@ -13,8 +13,8 @@
   <a href="https://git.savannah.gnu.org/cgit/bash.git/" title="GNU Bash source"><img src="https://img.shields.io/badge/Bash-4EAA25?style=flat&amp;logo=gnubash&amp;logoColor=white" alt="Bash"></a>
 </p>
 
-Caddy with Cloudflare and Njalla DNS providers and the rate-limit module, derived from hotio/caddy. Documentation: https://web.edb.fi/containers/caddy/.
+Based on [hotio/caddy](https://github.com/hotio/caddy), with Cloudflare and Njalla DNS providers and the rate-limit module.
 
-The image uses the edbfi Alpine VPN base, pinned by the commit tag in meta.json, which call-update keeps current. Caddy follows its latest release through the version call-update records in meta.json. As in hotio/caddy, the Go builder and xcaddy are taken at their latest versions on every build, and every module, including Njalla, at its latest release. Logs live under /config/logs. The hotio runtime account, configuration path, ports 8080/8443 and CUSTOM_BUILD support are retained. No retired personal Njalla fork is required.
+[Documentation and examples](https://web.edb.fi/containers/caddy/).
 
-GPL-3.0 license and upstream attribution retained.
+Caddy runs as the `hotio` account with configuration under `/config` and logs under `/config/logs`. The image exposes ports 8080/8443 and supports `CUSTOM_BUILD` for a custom Caddy binary.
